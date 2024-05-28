@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="feedback h-screen">
+    <div class="container flex align-center justify-center">
+      <div class="feedback_box flex align-center flex-col justify-center gap-3 border  border-gray-400 px-12 py-8 bg-gray-100 mt-7 rounded-xl">
+        <h1 class="text-2xl text-center uppercase tracking-widest text-gray-700">Feedback Form</h1>
+        <h3>Please help us to serve you better by taking a couple of minutes</h3>
+        <form id="feedbackForm">
+          <p class="text-sm tracking-wide">How satisfied were you with our Service?</p>
+          <div class="feedback_box_radio_btn">
+            <div class="flex gap-x-6 flex-col">
+              <div class="flex">
+                <input
+                  type="radio"
+                  name="satisfaction"
+                  value="Excellent"
+                  class="mt-0.5 border-gray-200 rounded-full text-blue-600"
+                  id="excellent"
+                />
+                <label for="excellent" class="text-md ms-2">Excellent</label>
+              </div>
+
+              <div class="flex">
+                <input
+                  type="radio"
+                  name="satisfaction"
+                  value="Good"
+                  class="mt-0.5 border-gray-200 rounded-full text-blue-600"
+                  id="good"
+                />
+                <label for="good" class="text-md ms-2">Good</label>
+              </div>
+
+              <div class="flex">
+                <input
+                  type="radio"
+                  name="satisfaction"
+                  value="Neutral"
+                  class="mt-0.5 border-gray-200 rounded-full text-blue-600"
+                  id="neutral"
+                />
+                <label for="neutral" class="text-md ms-2">Neutral</label>
+              </div>
+              <div class="flex">
+                <input
+                  type="radio"
+                  name="satisfaction"
+                  value="Poor"
+                  class="mt-0.5 border-gray-200 rounded-full text-blue-600"
+                  id="poor"
+                />
+                <label for="poor" class="text-md ms-2">Poor</label>
+              </div>
+            </div>
+          </div>
+          <div class="feedback_textarea flex flex-col gap-4">
+            <p class="text-sm tracking-wide">If you have specific feedback, please write to us</p>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              class="block p-2.5 w-full text-sm rounded-lg border border-gray-300"
+              placeholder="Additional Comments"
+            ></textarea>
+            <div class="feedback_name_email flex gap-3">
+              <input
+                type="text"
+                name="name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
+                placeholder="Name(Optional)"
+              />
+              <input
+                type="email"
+                name="email"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
+                placeholder="Email"
+                required
+              />
+            </div>
+            <input
+              type="tel"
+              name="phoneNumber"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
+              placeholder="Number"
+            />
+            
+            <button
+              type="submit"
+              id="submitFeedbackBtn"
+              class="text-white bg-gray-800 hover:bg-gray-900 font-medium rounded-lg text-sm px-7 py-3 me-2 mb-2 text-lg tracking-widest uppercase"
+            >
+              Submit feedback
+            </button>
+          </div>
+        </form>
+        <a href="login.html">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const feedbackForm = document.getElementById('feedbackForm');
+
+      feedbackForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(feedbackForm);
+        const formDataObject = {};
+        formData.forEach((value, key) => {
+          formDataObject[key] = value;
+        });
+
+        try {
+          const response = await fetch('/', {
+            method: 'POST',
+            body: formData
+          });
+          
+          if (!response.ok) {
+            throw new Error('Failed to submit feedback');
+          }
+
+          alert('Feedback submitted successfully!');
+          feedbackForm.reset(); // Reset the form after successful submission
+        } catch (error) {
+          console.error('Error submitting feedback:', error);
+          alert('Error submitting feedback. Please try again later.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
